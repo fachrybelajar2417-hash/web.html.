@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Our Little Story</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
+
+<style>
+  .polaroid{
+  background: #fff;
+  padding: 14px 14px 36px;
+  border-radius: 12px;
+  box-shadow: 0 18px 35px rgba(0,0,0,0.18);
+  transition: transform .4s ease, box-shadow .4s ease;
+}
+
+.polaroid img{
+  width: 100%;
+  height: 230px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.polaroid p{
+  margin-top: 12px;
+  font-size: 12px;
+  color: #444;
+  text-align: center;
+  font-style: italic;
+}
+
+/* ROTASI ACAK BIAR NATURAL */
+.polaroid:nth-child(odd){
+  transform: rotate(-2deg);
+}
+.polaroid:nth-child(even){
+  transform: rotate(2deg);
+}
+
+/* HOVER HALUS */
+.polaroid:hover{
+  transform: rotate(0deg) scale(1.05);
+  box-shadow: 0 28px 50px rgba(0,0,0,0.28);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  font-family:'Poppins',sans-serif;
+  background:#0f0f0f;
+  color:#fff;
+}.song-box{
+  display: flex;
+  gap: 40px;                 /* jarak antar lagu */
+  justify-content: center;   /* posisi ke tengah */
+  align-items: flex-start;
+  flex-wrap: wrap;           /* biar responsif di HP */
+}
+
+.song{
+  max-width: 260px;
+  text-align: center;
+}
+
+/* ===== DAFTAR ISI ===== */
+.toc{
+  position:fixed;
+  left:25px;
+  top:50%;
+  transform:translateY(-50%);
+  display:flex;
+  flex-direction:column;
+  gap:15px;
+  z-index:20;
+}
+.toc a{
+  width:45px;height:45px;
+  border-radius:50%;
+  border:1px solid #aaa;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-family:'Playfair Display',serif;
+  font-size:12px;
+  cursor:pointer;
+  transition:.3s;
+}
+.toc a:hover{background:#fff;color:#000}
+
+/* ===== POPUP ===== */
+.popup{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.85);
+  display:none;
+  justify-content:center;
+  align-items:center;
+  z-index:50;
+}
+.popup-box{
+  background:#111;
+  padding:35px 40px;
+  border-radius:14px;
+  text-align:center;
+  max-width:420px;
+}
+.popup-box button{
+  margin-top:20px;
+  padding:8px 30px;
+  border:none;
+  cursor:pointer;
+}
+
+/* ===== SECTION UMUM ===== */
+section{
+  min-height:100vh;
+  padding:80px 12%;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+}
+
+/* ===== OPENING ===== */
+#opening{
+  background:
+  linear-gradient(rgba(0,0,0,.6),rgba(0,0,0,.6)),
+  url("foto_background1.jpeg") center/cover no-repeat;
+  flex-direction:column;
+}
+#opening h1{
+  font-family:'Playfair Display',serif;
+  font-size:48px;
+  margin-bottom:10px;
+}
+
+/* ===== POEM ===== */
+#poem{
+  background:
+  linear-gradient(rgba(0,0,0,.6),rgba(0,0,0,.6)),
+  url("foto_background1.jpeg") center/cover no-repeat;
+}
+
+/* ===== MEMORIES FIXED BACKGROUND ===== */
+.memories-section{
+  padding: 80px 10%;
+}
+.memories-list{
+  display: flex;
+  flex-direction: column;
+  gap: 35px;
+}
+.memory-card{
+  position: relative;
+  width: 100%;
+  height: 320px; /* ⬅ ukuran tetap */
+  border-radius: 22px;
+  overflow: hidden;
+  cursor: pointer;
+}
+.memory-card img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.memory-overlay{
+  position: absolute;
+  bottom: 20px;
+  left: 25px;
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  color: #fff;
+  text-shadow: 0 4px 15px rgba(0,0,0,0.6);
+}
+.memory-card:hover img{
+  transform: scale(1.05);
+  transition: .5s ease;
+}
+@media (max-width:768px){
+  .memory-card{ height: 240px; }
+  .memory-overlay{ font-size: 18px; }
+}
+
+/* 🔹 FIXED BACKGROUND MEMORIES */
+.memories-section.custom-bg {
+  background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
+              url('foto_background1.jpeg') no-repeat center center;
+  background-size: cover;
+  padding: 80px 10%;
+  min-height: 600px;
+  position: relative;
+  z-index: 1;
+}
+
+/* ===== GALLERY 6 ===== */
+#gallery6{
+  background:
+    linear-gradient(rgba(0,0,0,.6), rgba(0,0,0,.6)),
+    url("foto_background1.jpeg") center/cover no-repeat;
+}
+.gallery-6{
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 30px;
+}
+.gallery-6 img{
+  width:100%;
+  height:250px;
+  object-fit:cover;
+  border-radius:18px;
+}
+
+/* ===== SONGS ===== */
+#songs{
+  background:
+    linear-gradient(rgba(0,0,0,.6), rgba(0,0,0,.6)),
+    url("foto_background1.jpeg") center/cover no-repeat;
+}
+.song{max-width:250px}
+.song img{
+  width:100%;
+  border-radius:10px;
+  margin-bottom:10px;
+}
+
+/* ===== LYRICS ===== */
+#lyrics{
+  background:
+    linear-gradient(rgba(0,0,0,.6), rgba(0,0,0,.6)),
+    url("foto_background1.jpeg") center/cover no-repeat;
+}
+.lyrics-box{
+  max-width:700px;
+}
+.lyrics-box p{
+  margin:20px 0;
+  line-height:1.8;
+  color:#ccc;
+}
+
+/* ===== CLOSING ===== */
+#closing{
+  background:
+    linear-gradient(rgba(0,0,0,.6), rgba(0,0,0,.6)),
+    url("foto_background1.jpeg") center/cover no-repeat;
+}
+</style>
+</head>
+<body>
+
+<!-- DAFTAR ISI -->
+<div class="toc">
+  <a onclick="goToSection('kanad','kanad','Even If Everyone Leaves I Will Stay By Your Side')">01</a>
+  <a onclick="goToSection('kanadila','kanadila','i love you. and im with you for as long as you want me to be')">02</a>
+  <a onclick="goToSection('nadilaa','nadilaa','i love you so much more than the miles between us')">03</a>
+  <a onclick="goToSection('i love you.','i love you','i love you. ive always loved you, even when you couldnt love yourself')">04</a>
+  <a onclick="goToSection('i saw','i saw','and i saw forever in you')">05</a>
+  <a onclick="goToSection('just','just','just stay and be my last')">06</a>
+  <a onclick="goToSection('loving','loving','loving you is the best decision ive ever made')">07</a>
+  <a onclick="goToSection('meet','meet','meeting you was the best part of my life')">08</a>
+</div>
+
+<!-- POPUP -->
+<div class="popup" id="popup">
+  <div class="popup-box">
+    <p id="popupText"></p>
+    <button onclick="closePopup()">Tutup</button>
+  </div>
+</div>
+
+<!-- SECTION 1 -->
+<section id="opening">
+  <h1>Happy Birthday Nadilaa Kasih Djufrani<span style="color:white;">♡</span></h1>
+  <p>Happy birthday maa favorite person ever, the one who always makes my heart feel safe and happy,
+thank you for staying, for understanding me, and for loving me with all ur heart.
+How lucky i am to have someone as beautiful, kind and perfect as you..
+im so grateful to have you in my life. i love you so much, and i hope this year brings you more joy, more strength, and everything you've been praying for..
+</p>
+<p>HAPPY BIRTHDAY MAA LOOVEEE<span style="color:white;">♡</span><span style="color:white;">♡</span></p>
+</section>
+
+<!-- SECTION 2 -->
+<section id="poem">
+  <div>
+    <h2>always remember, you are more than the negative thoughts in your head. you are beautiful, precious, deeply worthy, and more than enough!</h2>
+    <p>
+      Never let yourself become weak because of words from people who don’t really know you.
+Just ignore the bad things said by people who don’t like you.
+Keep being yourself and spread good vibes wherever you go..<br>
+      
+    </p>
+  </div>
+</section>
+
+<!-- SECTION 3 : MEMORIES (background sudah diperbaiki) -->
+<section id="memories" class="section memories-section custom-bg">
+  <h2 class="section-title">Our Memories</h2>
+  <div class="memories-list">
+    <div class="memory-card" onclick="showText('our first photo together just three days after we met. You brought me lunch, and I gave you your favorite pink flowers. such a sweet moment and I’ll always remember..')">
+      <img src="memories-1.jpeg" alt="">
+      <div class="memory-overlay"><span style="color:white;">♡</span></div>
+    </div>
+    <div class="memory-card" onclick="showText('the day we were just getting to know each other still shy and unsure. a photo of us together in our school uniforms standing by your side. i didn’t know it then, but that moment quietly became one of my most beautiful memories with you..')">
+      <img src="memories-4.jpeg" alt="">
+      <div class="memory-overlay"><span style="color:white;">♡</span></div>
+    </div>
+    <div class="memory-card" onclick="showText('that day, we were already tired from school. then out of nowhere we decided to go to Braga. that afternoon turned into one of the most beautiful moments i’ve ever had with you, walking around Braga after school, our first “Braga date.” i’ll never forget the first time we went there together..')">
+      <img src="memories-2.jpeg" alt="">
+      <div class="memory-overlay"><span style="color:white;">♡</span></div>
+    </div>
+    <div class="memory-card" onclick="showText('that moment became one of the most precious and happiest times of my life. i hadn’t planned to ask may i be your bf?. i wasn’t even thinking about it at first, but somehow the thought suddenly crossed my mind. i had nothing prepared, nothing special with me, but I asked you anyway… and you said yes without hesitation, i remember how lucky I felt, how happy and full my heart was. it’s a moment i will never ever forget. ill always remember.. 17.12.25')">
+      <img src="memories-3.jpeg" alt="">
+      <div class="memory-overlay"><span style="color:white;">♡</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 4 : GALLERY 6 FOTO -->
+<section id="gallery6" class="section gallery-section">
+  <h2 class="section-title">Our Moments</h2>
+
+  <div class="gallery-6">
+    <div class="polaroid">
+      <img src="foto.1.jpeg">
+      <p>pap pertama kamui</p>
+    </div>
+
+    <div class="polaroid">
+      <img src="foto.2.jpeg">
+      <p>pertama kali kita main </p>
+    </div>
+
+    <div class="polaroid">
+      <img src="foto.3.jpeg">
+      <p>"untungnya ku bertemu denganmu di sela sempit hidup ini" "</p>
+    </div>
+
+    <div class="polaroid">
+      <img src="foto.4.jpeg">
+      <p>battle remi?</p>
+    </div>
+
+    <div class="polaroid">
+      <img src="foto.5.jpeg">
+      <p>photobooth pertama kita</p>
+    </div>
+
+    <div class="polaroid">
+      <img src="foto.6.jpeg">
+      <p>ketemu guru wkwk</p>
+    </div>
+  </div>
+</section>
+<!-- SECTION BARU : EXTRA MOMENTS -->
+<section id="gallery6" class="section gallery-section">
+  <h2 class="section-title">Our Moments</h2>
+
+  <div class="gallery-6">
+    <div class="polaroid">
+      <img src="foto.7.jpeg">
+      <p>lucu fotonya</p>
+    </div>
+
+    <div class="polaroid">
+      <img src="foto.8.jpeg">
+      <p>"baking date"</p>
+    </div>
+
+    <div class="polaroid">
+      <img src="foto.9.jpeg">
+      <p>selesai deeptalk kecil kecil</p>
+    </div>
+
+    <div class="polaroid">
+      <img src="foto.10.jpeg">
+      <p>hari tercerah olgaraga bareng mamam</p>
+    </div>
+
+    <div class="polaroid">
+      <img src="foto.11.jpeg">
+      <p>mau loncat?</p>
+    </div>
+
+    <div class="polaroid">
+      <img src="foto.12.jpeg">
+      <p>sebelum aku ditinggalin setahun</p>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 5 : SONGS -->
+<section id="songs">
+  <div>
+    <h2>Our Favorite Songs</h2><br><br>
+    <div class="song-box">
+      <div class="song">
+        <img src="heaven.jpg">
+        <p>Bryan Adams - Heaven
+        </p>
+        <audio controls><source src="Bryan Adams - Heaven.mp3"></audio>
+      </div>
+      <div class="song">
+        <img src="iris.jpg">
+        <p>Goo Goo Dolls - Iris</p>
+        <audio controls><source src="Goo Goo Dolls Iris [Official Music Video] [4K Remaster].mp3"></audio>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 6 : LYRICS -->
+<section id="lyrics">
+  <div class="lyrics-box">
+    <h2>The Lyrics Of This Song Describe Us</h2>
+    <p>
+      "Tak hanya sekali ku merasa mesra
+Berharap mentari terbit dari barat
+Kami sudah muak, putus asa besar
+Mimpi tak pernah berjalan lancar
+Bajingan, keparat Baiknya m'reka masuk neraka"
+<br>
+      <h3>"Untungnya ku bertemu denganmu, Di sela sempit hidup ini"</h3>
+    </p>
+    <p><strong>disarankan di bandung - Dongker & Jason Ranti</strong></p>
+    <audio controls><source src="disarankan di bandung - Dongker & Jason Ranti Lirik Lagu.mp3"></audio>
+  </div>
+</section>
+
+<!-- SECTION 7 : CLOSING -->
+<section id="closing">
+    <p>
+      Happy Birthday sayang, semoga di usia kamu yang 17 ini lebih baik dari sebelum nya semoga keinginan keinginan kamu terkabulkan, makin sayang sama mamam, makin sayang sama aku juga wkwk.
+<br>
+
+
+      <h2>i love you so much than everything</h2>
+</section>
+
+<script>
+function goToSection(id,title,text){
+  document.getElementById("popupText").innerText = title + "\n\n" + text;
+  document.getElementById("popup").style.display="flex";
+  document.getElementById(id).scrollIntoView({behavior: "smooth"});
+}
+function showText(text){
+  document.getElementById("popupText").innerText = text;
+  document.getElementById("popup").style.display="flex";
+}
+function closePopup(){
+  document.getElementById("popup").style.display="none";
+}
+</script>
+
+</body>
+</html>
